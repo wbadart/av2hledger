@@ -9,7 +9,8 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        # os: [macos-latest, ubuntu-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
@@ -34,6 +35,7 @@ jobs:
     needs: build
     steps:
     - uses: actions/download-artifact@v3
+    - run: ls -al
     - uses: softprops/action-gh-release@v1
       with:
         files: |
