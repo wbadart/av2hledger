@@ -2,7 +2,7 @@ name: build
 on: push
 jobs:
   build:
-    stragegy:
+    strategy:
       matrix:
         os: [macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
