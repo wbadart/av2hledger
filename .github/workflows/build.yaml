@@ -34,4 +34,5 @@ jobs:
     - run: ls -al
     - uses: softprops/action-gh-release@v1
       with:
-        files: prices-*
+        files: |
+          prices-*
