@@ -20,6 +20,15 @@ jobs:
     - run: |
         nim compile -d:ssl -d:release ./prices.nim
         mv prices prices-${{ matrix.os }}
+    - uses: actions/upload-artifact@v3
+      with:
+        name: prices-${{ matrix.os }}
+        path: prices-${{ matrix.os }}
+
+  release:
+    needs: build
+    steps:
+    - uses: actions/download-artifact@v3
     - uses: softprops/action-gh-release@v1
       with:
-        files: prices-${{ matrix.os }}
+        files: prices-*
