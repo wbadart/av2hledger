@@ -1,0 +1,20 @@
+name: build
+on: push
+jobs:
+  build:
+    stragegy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: jiro4989/setup-nim-action@v1
+      with:
+        nim-version: '1.6.10'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - run: |
+        nim compile -d:ssl -d:release ./prices.nim
+        mv prices prices-${{ matrix.os }}
+    - uses: softprops/action-gh-release@v1
+      with:
+        files: prices-${{ matrix.os }}
