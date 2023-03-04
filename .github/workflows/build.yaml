@@ -19,7 +19,11 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run: |
         nim compile -d:ssl -d:release ./prices.nim
-        mv prices prices-${{ matrix.os }}
+        if [ ${{ matrix.os }} = "macos-latest" ]; then
+          mv prices prices-darwin
+        elif [ ${{ matrix.os }} = "ubuntu-latest" ]; then
+          mv prices prices-linux
+        fi
     - uses: actions/upload-artifact@v3
       with:
         name: prices-${{ matrix.os }}
@@ -32,4 +36,6 @@ jobs:
     - uses: actions/download-artifact@v3
     - uses: softprops/action-gh-release@v1
       with:
-        files: prices-*
+        files: |
+          prices-darwin
+          prices-linux
