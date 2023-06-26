@@ -9,5 +9,5 @@ fetch_price() {
 
 hledger commodities | grep -Pv "${LEDGER_STOCKS_EXCLUDE:-^$}" | while read -r SYMBOL; do
   fetch_price "$SYMBOL" | xargs --no-run-if-empty printf "P %s $SYMBOL USD %f\n" || echo "Failed to fetch price for symbol '$SYMBOL'." >&2
-  sleep 13  # 5 requests per minute, plus a little buffer
+  sleep 12.2  # 5 requests per minute, plus a little buffer
 done
